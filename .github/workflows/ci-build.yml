@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
             name: ledfx-wheels
-            path: /dist
+            path: dist/
 
   build-ledfx-windows:
     name: Build LedFx (Windows)
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ledfx-wheels
-          path: /dist
+          path: dist/
   build-ledfx-osx:
     name: Build LedFx (OS X)
     runs-on: macos-latest
@@ -83,7 +83,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ledfx-wheels
-          path: /dist
+          path: dist/
   build-ledfx-frontend:
     name: Build LedFx Frontend
     runs-on: ubuntu-latest
