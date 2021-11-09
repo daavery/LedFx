@@ -28,6 +28,7 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
+
         uses: actions/upload-artifact@v2
         with:
             name: ledfx-wheels
@@ -111,8 +112,10 @@ jobs:
     name: Upload LedFx Wheels
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code from GitHub
+        uses: actions/checkout@v2
       - name: Gets Artifacts
-      - uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: ledfx-wheels
       - name: Publish distribution 📦 to Test PyPI
@@ -125,5 +128,3 @@ jobs:
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
-
-
