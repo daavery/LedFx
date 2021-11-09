@@ -28,7 +28,7 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
-        uses: kittaakos/upload-artifact-as-is@v1
+        uses: kittaakos/upload-artifact-as-is@v0
         with:
             path: dist/
 
@@ -51,7 +51,7 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
-        uses: kittaakos/upload-artifact-as-is@v1
+        uses: kittaakos/upload-artifact-as-is@v0
         with:
             path: dist/
   build-ledfx-osx:
@@ -77,7 +77,7 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
-        uses: kittaakos/upload-artifact-as-is@v1
+        uses: kittaakos/upload-artifact-as-is@v0
         with:
             path: dist/
   build-ledfx-frontend:
@@ -112,8 +112,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Gets Artifacts
         uses: actions/download-artifact@v2
-        with:
-          name: ledfx-wheels
+      - name: Unzip Wheels
+        run: unzip *
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:
