@@ -108,7 +108,7 @@ jobs:
         env:
           CI: true
   upload-test-wheels:
-    needs: [build-ledfx-linux, build-ledfx-windows, build-ledfx-osx,build-ledfx-frontend]
+    needs: [build-ledfx-linux, build-ledfx-windows, build-ledfx-osx]
     name: Upload LedFx Wheels
     runs-on: ubuntu-latest
     steps:
