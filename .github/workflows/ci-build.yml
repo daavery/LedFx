@@ -112,7 +112,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Gets Artifacts
         uses: actions/download-artifact@v2
-        path: dist/
+        with:
+          path: dist/
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:
