@@ -28,10 +28,8 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
-
-        uses: actions/upload-artifact@v2
+        uses: kittaakos/upload-artifact-as-is@v1
         with:
-            name: ledfx-wheels
             path: dist/
 
   build-ledfx-windows:
@@ -53,10 +51,9 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: kittaakos/upload-artifact-as-is@v1
         with:
-          name: ledfx-wheels
-          path: dist/
+            path: dist/
   build-ledfx-osx:
     name: Build LedFx (OS X)
     runs-on: macos-latest
@@ -80,10 +77,9 @@ jobs:
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: kittaakos/upload-artifact-as-is@v1
         with:
-          name: ledfx-wheels
-          path: dist/
+            path: dist/
   build-ledfx-frontend:
     name: Build LedFx Frontend
     runs-on: ubuntu-latest
