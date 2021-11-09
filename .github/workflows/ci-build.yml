@@ -1,8 +1,7 @@
 name: CI Build LedFx
 
 on:
-  push:
-  pull_request:
+  [push,pull_request]
 
 jobs:
   build-ledfx-linux:
