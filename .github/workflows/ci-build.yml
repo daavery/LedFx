@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.8,3.9]
+        python: [3.8,3.9,3.10]
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v2
@@ -22,20 +22,37 @@ jobs:
         uses: actions/setup-python@v2.2.1
         with:
           python-version: ${{ matrix.python }}
-      - name: Build a binary wheel
-        run: |
-          python -m pip install --user -U pip wheel setuptools
-          python setup.py bdist_wheel
-      - name: Install LedFx
-        run: |
-          pip install --pre --find-links=dist .
+      - name: Install pypa/build
+        run: >-
+          python -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: >-
+          python -m
+          build
+          --sdist
+          --wheel
+          --outdir dist/
+          .
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.SHAUNS_TESTPYPI_API_KEY }}
+          repository_url: https://test.pypi.org/legacy/
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
 
   build-ledfx-windows:
     name: Build LedFx (Windows)
     runs-on: windows-latest
     strategy:
       matrix:
-        python: [3.8,3.9]
+        python: [3.8,3.9,3.10]
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v2
@@ -44,20 +61,37 @@ jobs:
         uses: actions/setup-python@v2.2.1
         with:
           python-version: ${{ matrix.python }}
-      - name: Build a binary wheel
-        run: |
-          python -m pip install --user -U pip wheel setuptools
-          python setup.py bdist_wheel
-      - name: Install LedFx
-        run: |
-          pip install --pre --find-links=dist .
+      - name: Install pypa/build
+        run: >-
+          python -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: >-
+          python -m
+          build
+          --sdist
+          --wheel
+          --outdir dist/
+          .
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
 
   build-ledfx-osx:
     name: Build LedFx (OS X)
     runs-on: macos-latest
     strategy:
       matrix:
-        python: [3.8,3.9]
+        python: [3.8,3.9,3.10]
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v2
@@ -69,14 +103,30 @@ jobs:
         uses: actions/setup-python@v2.2.1
         with:
           python-version: ${{ matrix.python }}
-      - name: Build a binary wheel
-        run: |
-          python -m pip install numpy --compile --pre
-          python -m pip install --user -U pip wheel setuptools
-          python setup.py bdist_wheel
-      - name: Install LedFx
-        run: |
-          pip install --pre --find-links=dist .
+      - name: Install pypa/build
+        run: >-
+          python -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: >-
+          python -m
+          build
+          --sdist
+          --wheel
+          --outdir dist/
+          .
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
   build-ledfx-frontend:
     name: Build LedFx Frontend
     runs-on: ubuntu-latest
