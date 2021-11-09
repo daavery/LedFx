@@ -27,16 +27,11 @@ jobs:
         run: |
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
-      - name: Publish distribution 📦 to Test PyPI
-        uses: pypa/gh-action-pypi-publish@master
+      - name: Upload Artifacts
+      - uses: actions/upload-artifact@v2
         with:
-          password: ${{ secrets.SHAUNS_TESTPYPI_API_KEY }}
-          repository_url: https://test.pypi.org/legacy/
-      - name: Publish distribution 📦 to PyPI
-        if: startsWith(github.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          name: ledfx-wheels
+          path: /dist
 
   build-ledfx-windows:
     name: Build LedFx (Windows)
@@ -56,19 +51,11 @@ jobs:
         run: |
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
-      - name: Publish distribution 📦 to Test PyPI
-        uses: pypa/gh-action-pypi-publish@master
+      - name: Upload Artifacts
+      - uses: actions/upload-artifact@v2
         with:
-          password: ${{ secrets.SHAUNS_TESTPYPI_API_KEY }}
-          repository_url: https://test.pypi.org/legacy/
-      - name: Publish distribution 📦 to PyPI
-        if: startsWith(github.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
-
-
-
+          name: ledfx-wheels
+          path: /dist
   build-ledfx-osx:
     name: Build LedFx (OS X)
     runs-on: macos-latest
@@ -91,16 +78,11 @@ jobs:
           python -m pip install numpy --compile --pre
           python -m pip install --user -U pip wheel setuptools
           python setup.py bdist_wheel
-      - name: Publish distribution 📦 to Test PyPI
-        uses: pypa/gh-action-pypi-publish@master
+      - name: Upload Artifacts
+      - uses: actions/upload-artifact@v2
         with:
-          password: ${{ secrets.SHAUNS_TESTPYPI_API_KEY }}
-          repository_url: https://test.pypi.org/legacy/
-      - name: Publish distribution 📦 to PyPI
-        if: startsWith(github.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          name: ledfx-wheels
+          path: /dist
   build-ledfx-frontend:
     name: Build LedFx Frontend
     runs-on: ubuntu-latest
@@ -124,5 +106,23 @@ jobs:
           yarn build
         env:
           CI: true
+  # upload-test-wheels:
+  #   name: Upload LedFx Wheels
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Gets Artifacts
+  #     - uses: actions/download-artifact@v2
+  #         with:
+  #           name: ledfx-wheels
+  #     - name: Publish distribution 📦 to Test PyPI
+  #       uses: pypa/gh-action-pypi-publish@master
+  #       with:
+  #         password: ${{ secrets.SHAUNS_TESTPYPI_API_KEY }}
+  #         repository_url: https://test.pypi.org/legacy/
+  #     - name: Publish distribution 📦 to PyPI
+  #       if: startsWith(github.ref, 'refs/tags')
+  #       uses: pypa/gh-action-pypi-publish@master
+  #       with:
+  #         password: ${{ secrets.PYPI_API_TOKEN }}
 
 
