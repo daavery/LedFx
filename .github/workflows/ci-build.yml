@@ -12,11 +12,6 @@ jobs:
     name: Build LedFx (Ubuntu)
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v2.2.1
-        with:
-            python-version: ${{ env.DEFAULT_PYTHON }}
       - name: Check out code from GitHub
         uses: actions/checkout@v2
       - name: Install build dependencies
